@@ -30,7 +30,9 @@ const rubber = (over, size = 1, c = 0.55) => (over * size * c) / (size + c * Mat
 const machine = new Machine();
 for (const k of "1234*56=") machine.press(k);
 const sound = new Sound();
-sound.prepare();
+// The sound sheet is 0.8 MB, so it waits until the browser is idle rather than competing with the first paint.
+if ('requestIdleCallback' in window) requestIdleCallback(() => sound.prepare(), { timeout: 3000 });
+else setTimeout(() => sound.prepare(), 1500);
 
 // ---- the other calculator it can become ----
 const sci = new Scientific();

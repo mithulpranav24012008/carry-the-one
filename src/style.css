@@ -277,3 +277,12 @@ img, video { display: block; max-width: 100%; height: auto; }
 @media (prefers-reduced-motion: reduce) {
   .views button, .i-steps button, .i-back, .name, .sentence { transition: none; }
 }
+
+/* Until the machine is built, say so where it will appear. */
+html:not(.js-ready) .hero-stage { display: grid; place-items: center; }
+html:not(.js-ready) .hero-stage::before { content: "Building the machine…"; font-size: 15px; opacity: 0.7; }
+
+@media print {
+  .hero-stage, .views, .inspect, .hint, canvas, button { display: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+}
