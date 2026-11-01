@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Carry the One</title>
+<meta name="description" content="A twenty-digit mechanical calculator you can operate in your browser. Press the keys, pull the crank, turn it right round, and lift the cover to see every part.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+<main>
+<section id="machine" class="field hero">
+  <nav class="bar" aria-label="Page">
+    <a class="mono-mark" href="#machine">Carry</a>
+    <span class="bar-links">
+      <a href="#film-chapter">Film</a>
+      <a href="#moves">Inside</a>
+      <a href="#lineage">History</a>
+      <a href="#questions">Questions</a>
+    </span>
+  </nav>
+
+  <div class="hero-stage">
+    <canvas id="stage" aria-label="A mechanical calculator with a walnut case and brass plates, which can transform into a scientific calculator. Its keys, crank and carriage all work, and you can turn it to see any side." role="img"></canvas>
+    <p class="part-tip" id="part-tip" hidden></p>
+    <div class="views" role="group" aria-label="Turn the calculator">
+      <button type="button" data-view="front">Front</button><button type="button" data-view="back">Back</button><button type="button" data-view="left">Left</button><button type="button" data-view="right">Right</button><button type="button" data-view="top">Top</button><button type="button" data-view="under">Under</button><button type="button" data-zoom="1.25" aria-label="Zoom out">−</button><button type="button" data-zoom="0.8" aria-label="Zoom in">+</button>
+    </div>
+  </div>
+
+  <aside class="inspect" id="inspect" aria-label="Parts" hidden>
+    <p class="i-count" id="i-count"></p>
+    <h2 class="i-name" id="i-name"></h2>
+    <p class="i-note" id="i-note"></p>
+    <dl class="i-facts">
+      <div><dt>From</dt><dd id="i-group"></dd></div>
+      <div><dt>Size, about</dt><dd id="i-size"></dd></div>
+    </dl>
+    <label class="i-pick"><span>Go to a part</span><select id="i-select"></select></label>
+    <div class="i-steps">
+      <button type="button" id="i-prev">Previous</button><button type="button" id="i-next">Next</button>
+    </div>
+    <button type="button" class="i-back" id="i-back" hidden>Back to all the parts</button>
+  </aside>
+
+  <h1 class="name"><span class="line"><span class="ink-1">Carry</span></span> <span class="line"><span class="ink-2">the one.</span></span></h1>
+
+  <p class="sentence">A twenty-digit mechanical calculator you can work in your browser. Every digit on it is a turning wheel.</p>
+
+  <div class="hero-actions">
+    <button class="btn" id="run-main" data-run="22/7=" data-run-sci="sin 30 ) + sqrt 16 ) =" data-mech-label="Run 22 ÷ 7" data-sci-label="Run sin 30° + √16" type="button">Run 22 ÷ 7</button>
+    <button class="btn alt" data-cover type="button" aria-pressed="false">Lift the cover</button>
+    <button class="btn alt" id="morph" type="button" aria-pressed="false">Scientific Calculator</button>
+    <button class="btn alt quiet" id="sound" type="button" aria-pressed="true">Sound on</button>
+  </div>
+
+  <div class="readout" aria-label="What the machine reads">
+    <p class="r-value" id="r-value">0</p>
+    <p class="r-expr" id="r-expr">Ready</p>
+    <dl class="r-table">
+      <div><dt>Setting</dt><dd id="r-set">0</dd></div>
+      <div><dt>Counter</dt><dd id="r-count">0</dd></div>
+      <div><dt>Last run</dt><dd id="r-turns">0 crank turns</dd></div>
+    </dl>
+    <p class="hint">Press the keys or type. Drag the crank handle. Drag anywhere else to turn it right round.</p>
+    <p class="sr" id="r-live" aria-live="polite"></p>
+  </div>
+
+  <div class="pad pad-sci" role="group" aria-label="Scientific calculator keys">
+    <button type="button" data-key="2nd">2nd</button><button type="button" data-key="drg">DRG</button><button type="button" data-key="mc">MC</button><button type="button" data-key="mr">MR</button><button type="button" data-key="m+">M+</button><button type="button" data-key="m-">M−</button>
+    <button type="button" data-key="sin">sin</button><button type="button" data-key="cos">cos</button><button type="button" data-key="tan">tan</button><button type="button" data-key="ln">ln</button><button type="button" data-key="log">log</button><button type="button" data-key="pow">xʸ</button>
+    <button type="button" data-key="sqrt">√</button><button type="button" data-key="sq">x²</button><button type="button" data-key="inv">1/x</button><button type="button" data-key="fact">n!</button><button type="button" data-key="pi">π</button><button type="button" data-key="e">e</button>
+    <button type="button" data-key="shift-left">(</button><button type="button" data-key="shift-right">)</button><button type="button" data-key="turn-">EE</button><button type="button" data-key="turn+">Ans</button><button type="button" data-key="C">DEL</button><button type="button" data-key="AC">AC</button>
+    <button type="button" class="wide" data-key="7">7</button><button type="button" class="wide" data-key="8">8</button><button type="button" class="wide" data-key="9">9</button>
+    <button type="button" class="wide" data-key="4">4</button><button type="button" class="wide" data-key="5">5</button><button type="button" class="wide" data-key="6">6</button>
+    <button type="button" class="wide" data-key="1">1</button><button type="button" class="wide" data-key="2">2</button><button type="button" class="wide" data-key="3">3</button>
+    <button type="button" class="wide" data-key="0">0</button><button type="button" class="wide" data-key=".">.</button><button type="button" class="wide" data-key="+/-">±</button>
+    <button type="button" data-key="/" aria-label="Divide">÷</button><button type="button" data-key="*" aria-label="Multiply">×</button><button type="button" data-key="-" aria-label="Subtract">−</button><button type="button" data-key="+" aria-label="Add">+</button><button type="button" data-key="%">%</button><button type="button" class="eq" data-key="=" aria-label="Equals">=</button>
+  </div>
+
+  <div class="pad pad-mech" role="group" aria-label="Calculator keys">
+    <button type="button" data-key="AC">AC</button><button type="button" data-key="C">C</button><button type="button" data-key="+/-">±</button><button type="button" data-key="/" aria-label="Divide">÷</button>
+    <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button><button type="button" data-key="*" aria-label="Multiply">×</button>
+    <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button><button type="button" data-key="-" aria-label="Subtract">−</button>
+    <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button><button type="button" data-key="+" aria-label="Add">+</button>
+    <button type="button" data-key="0">0</button><button type="button" data-key="." aria-label="Decimal point">.</button><button type="button" data-crank="1" aria-label="Turn the crank forward">Turn +</button><button type="button" data-key="=" class="eq" aria-label="Equals">=</button>
+    <button type="button" data-key="shift-left" aria-label="Shift carriage left">Shift ←</button><button type="button" data-crank="-1" aria-label="Turn the crank backward">Turn −</button><button type="button" data-key="shift-right" aria-label="Shift carriage right">Shift →</button><button type="button" data-key="clear-c" aria-label="Clear the counter">Clear count</button>
+  </div>
+</section>
+
+<section id="film-chapter" class="field split">
+  <div class="plate" data-in>
+    <video id="film" muted loop playsinline preload="metadata" poster="/film-poster.jpg" width="1080" height="1080" aria-label="A six-digit multiplication and a division, performed by the machine with its cover off.">
+      <source src="/film.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="split-text">
+    <div class="tabs" role="tablist" aria-label="Chapters of the film">
+      <button type="button" role="tab" aria-selected="true" data-seek="0">Keying</button>
+      <button type="button" role="tab" aria-selected="false" data-seek="4.7">Multiplying</button>
+      <button type="button" role="tab" aria-selected="false" data-seek="12.6">Dividing</button>
+    </div>
+    <div data-in>
+      <h2 class="title">1,234 × 56, cover off</h2>
+      <p class="desc">56 is 100 minus 44, so the machine turns back four times at the units, back four at the tens and forward once at the hundreds. Nine turns instead of eleven. This is short-cut multiplication, and operators did it by hand. The counter still ends on 56 and the accumulator on 69,104.</p>
+    </div>
+    <div class="cells" data-in>
+      <button class="cell ink" data-run="1234*56=" type="button">Run this sum</button>
+      <button class="cell tone" data-cover type="button">Lift the cover</button>
+    </div>
+  </div>
+</section>
+
+<section id="moves" class="field moves">
+  <div class="moves-head" data-in>
+    <h2 class="big">Three moves</h2>
+    <p>All arithmetic on this machine comes down to these. Move the sliders and watch the numbers change.</p>
+  </div>
+  <div class="tile-row">
+    <figure class="tile-col" style="--span:3" data-in>
+      <div class="tile t1" id="fig-set"></div>
+      <figcaption><strong>Set</strong> A key moves a pinion along a toothed drum. Its place on the drum is the digit.</figcaption>
+    </figure>
+    <figure class="tile-col" style="--span:4" data-in>
+      <div class="tile t2" id="fig-turn"></div>
+      <figcaption><strong>Turn</strong> One turn of the crank is one turn of every drum. The pinion meets as many teeth as the digit, and its wheel rolls on by that many.</figcaption>
+    </figure>
+    <figure class="tile-col" style="--span:5" data-in>
+      <div class="tile t3" id="fig-carry"></div>
+      <figcaption><strong>Carry</strong> A wheel rolling past 9 trips a single tooth, and its neighbour moves one place. That is the whole trick behind the name.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="lineage" class="field lineage">
+  <h2 class="big centre" data-in>Three centuries of turning</h2>
+  <div class="prints">
+    <figure class="print" data-in style="--r:-5deg" tabindex="0">
+      <img src="/pics/leibniz.jpg" alt="Replica of Leibniz's stepped reckoner: a long brass machine in a wooden case." width="1200" height="900" loading="lazy">
+      <figcaption>1694. Leibniz finishes the stepped reckoner, and the toothed drum in this machine.</figcaption>
+    </figure>
+    <figure class="print" data-in style="--r:3deg" tabindex="0">
+      <img src="/pics/thomas.jpg" alt="A Thomas de Colmar arithmometer from 1852: a brass-plated desk machine with sliders and a crank." width="1200" height="900" loading="lazy">
+      <figcaption>1851. Thomas de Colmar's arithmometer goes on sale, and offices start buying them.</figcaption>
+    </figure>
+    <figure class="print" data-in style="--r:-2deg" tabindex="0">
+      <img src="/pics/odhner.jpg" alt="An Odhner-type pinwheel calculator on a table." width="1200" height="900" loading="lazy">
+      <figcaption>1870s. Odhner's pinwheel makes the machine small enough to carry to a desk.</figcaption>
+    </figure>
+    <figure class="print" data-in style="--r:5deg" tabindex="0">
+      <img src="/pics/curta.jpg" alt="A Curta: a small hand-held cylindrical calculator with sliders around its side." width="1200" height="900" loading="lazy">
+      <figcaption>1948. Curt Herzstark's Curta fits a whole stepped drum into one hand.</figcaption>
+    </figure>
+  </div>
+  <p class="lineage-note" data-in>Carry is an invented machine, drawn in the line of these four. By the 1970s the pocket electronic calculator had ended the line.</p>
+</section>
+
+<section id="fan" class="fan">
+  <div class="fan-stage">
+    <div class="fan-head" data-in>
+      <h2 class="big-2">Forty-one parts to read</h2>
+      <p>Ten wheels you set, ten that count, twenty that answer, and one bell.</p>
+    </div>
+    <div class="fan-cards">
+      <article class="card" style="--r:-3deg;--c:var(--lichen)">
+        <h3>Ten to set</h3>
+        <img src="/stills/setting.jpg" alt="Close view of the setting wheels on the deck, above the keys." width="480" height="360" loading="lazy">
+        <p>The setting wheels show what you keyed. Up to ten digits.</p>
+      </article>
+      <article class="card" style="--r:2deg;--c:var(--sandstone)">
+        <h3>Ten to count</h3>
+        <img src="/stills/counter.jpg" alt="Close view of the dark counter wheels on the carriage." width="480" height="360" loading="lazy">
+        <p>The counter records the turns. After a division, it holds the answer.</p>
+      </article>
+      <article class="card" style="--r:-1deg;--c:var(--bone)">
+        <h3>Twenty to answer</h3>
+        <img src="/stills/accumulator.jpg" alt="Close view of the row of accumulator wheels." width="480" height="360" loading="lazy">
+        <p>The accumulator takes every turn, on a carriage that shifts by columns.</p>
+      </article>
+      <article class="card" style="--r:3deg;--c:var(--oxide);--card-ink:#fff">
+        <h3>One bell</h3>
+        <img src="/stills/bell.jpg" alt="Close view of the brass bell and its hammer inside the machine." width="480" height="360" loading="lazy">
+        <p>It rings when a subtraction goes through zero. Division listens for it.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="questions" class="bands">
+  <div class="band head"><h2 class="big-2">Questions</h2></div>
+  <div class="band a" data-in>
+    <h3>What does the Scientific Calculator button do?</h3>
+    <p>The machine's own parts rebuild themselves into an electronic scientific calculator, and press it again to turn back. The cover's planks become the body, the crank becomes the stand, and the keys re-form into a new keypad, with the spare keys sliding out from inside the ones you already know. It works as a real calculator with trig in degrees, radians or grads, logs, roots, powers, factorials, brackets, memory and Ans. From the keyboard: s, c and t for trig, l for log, n for ln, r for root, p for π, ^ for powers and Enter for equals. Lift its cover and it comes apart down to the logic board: type a sum and you can watch the signal run along each key's row and column, through the chip and out to the display.</p>
+  </div>
+  <div class="band b" data-in>
+    <h3>Why does 1 ÷ 3 × 3 give 0.999999999?</h3>
+    <p>Because that is what the wheels say. A division stops when the counter runs out of columns, and the machine does not round up. The figure stays visibly short of 1, as it would have on a real desk in 1955.</p>
+  </div>
+  <div class="band a" data-in>
+    <h3>Does it really calculate with wheels?</h3>
+    <p>Every digit is added column by column, with each carry passed to the next wheel, and the 3D wheels are positioned from those same digits. There is no floating point, so 0.1 + 0.2 comes to exactly 0.3.</p>
+  </div>
+  <div class="band b" data-in>
+    <h3>What happens below zero?</h3>
+    <p>The bell rings. A true machine would then show a long run of nines, the tens complement. Carry adds one convenience: its wheels roll over to the plain figure and a red flag rises in the window beside the counter.</p>
+  </div>
+  <div class="band a" data-in>
+    <h3>Can it divide by zero?</h3>
+    <p>Try it. Division subtracts until the bell rings, and subtracting zero never rings it. A real machine had to be stopped by hand. This one turns nine times and jams until you press AC.</p>
+  </div>
+  <div class="band b" data-in>
+    <h3>Which keys does it take?</h3>
+    <p>Digits, the point and + − * / from your keyboard, Enter for equals, Delete for C and Escape for AC. The arrow keys shift the carriage. N changes the sign. The crank is yours: set a number and drag the handle round once to add it by hand. To see it from any side, drag the machine, or use the Front, Back, Left, Right, Top and Under buttons. Lift the cover and every part floats free: click one to see it alone, and use the arrow keys to move between parts and Escape to go back. Pinch, or hold Control and scroll, to zoom.</p>
+  </div>
+  <div class="band a" data-in>
+    <h3>Is this a copy of a real calculator?</h3>
+    <p>No. Its stepped drums, shifting carriage, counter and bell all come from real machines, but this model, the name and the maker's plate are invented. The red sign flag is the one thing no machine of the period had in this form.</p>
+  </div>
+</section>
+</main>
+
+<footer class="end">
+  <div class="end-top" data-in>
+    <p>Carry, Model 20.<br>Ten setting, ten counter and twenty accumulator wheels.</p>
+    <a href="#machine">Back to top</a>
+  </div>
+  <button class="end-line" type="button" data-run="9999999999/7=">Try ten digits ÷ 7</button>
+  <p class="credits" id="credits">Pictures: <a href="https://commons.wikimedia.org/w/index.php?curid=925505">“Leibnitzrechenmaschine”</a> by User:Kolossos, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; <a href="https://commons.wikimedia.org/w/index.php?curid=47070317">“Arithmometer Colmar 1852”</a> by Dr. Bernd Gross, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>; <a href="https://commons.wikimedia.org/wiki/File:%D0%93%D1%83%D0%BB%D1%8C%D0%B4%D0%B0%D0%BB%D0%B0,_%D0%B0%D1%80%D0%B8%D1%84%D0%BC%D0%BE%D0%BC%D0%B5%D1%82%D1%80_%D0%9E%D0%B4%D0%BD%D0%B5%D1%80%D0%B0.jpg">“Гульдала, арифмометр Однера”</a> by Nikolai Bulykin, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>; <a href="https://commons.wikimedia.org/w/index.php?curid=24857387">“2010 CURTA-Calculator 08”</a> by Thomas Schanz, <a href="https://creativecommons.org/licenses/by-sa/3.0/">CC BY-SA 3.0</a>; all via Wikimedia Commons. Sounds, cut from: <a href="https://commons.wikimedia.org/wiki/File:Brunsviga_Nova_13Z_Mechanical_Calculator.webm">“Brunsviga Nova 13Z Mechanical Calculator”</a> by Antti Makkonen and Antti Hannunen, <a href="http://www.soundsofchanges.eu/sound/brunsviga-nova-13z-mechanical-calculator">Sounds of Changes</a>, <a href="https://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>; <a href="https://commons.wikimedia.org/wiki/File:Keystrokes_in_a_vintage_mechanical_calculator.webm">“Keystrokes in a vintage mechanical calculator”</a> by Subhashish Panigrahi, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a>. The machine, its film and its figures are drawn in code.</p>
+
+</footer>
+<script type="module" src="/src/main.js"></script>
+</body>
+</html>

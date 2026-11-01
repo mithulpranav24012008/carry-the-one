@@ -1,0 +1,24 @@
+{
+  "name": "carry-the-one",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "node figures/build.mjs && vite build",
+    "preview": "vite preview",
+    "test": "node --test test/model.test.mjs test/fuzz.test.mjs test/sci.test.mjs",
+    "film": "remotion render film/index.jsx Film public/film.mp4 --gl=angle --codec=h264 --crf=24"
+  },
+  "dependencies": {
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@remotion/cli": "^4.0.484",
+    "@remotion/google-fonts": "^4.0.484",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "remotion": "^4.0.484",
+    "vite": "^6.4.5"
+  },
+  "license": "MIT"
+}
