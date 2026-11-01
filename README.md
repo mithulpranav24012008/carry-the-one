@@ -2,6 +2,8 @@
 
 A twenty-digit mechanical calculator you can work in your browser, in real-time 3D. Every digit is a turning wheel, and the arithmetic is done by the wheels, not by floating point.
 
+**Try it: [https://mithulpranav24012008.github.io/carry-the-one/](https://mithulpranav24012008.github.io/carry-the-one/)**
+
 Built with Three.js and Vite. No framework.
 
 ## What you can do
